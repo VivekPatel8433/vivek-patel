@@ -1,17 +1,22 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:18-alpine'
+            args '-u root'
+        }
+    }
 
     stages {
         stage('Build') {
             steps {
                 echo 'Installing dependencies...'
-                sh 'npm install'
+                sh 'cd vivek-patel && npm install'
             }
         }
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh 'CI=true npm test'
+                sh 'cd vivek-patel && CI=true npm test'
             }
         }
     }
